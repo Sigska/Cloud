@@ -7,7 +7,7 @@ package main
 //	"io/ioutil"
 //	"strings"
 	"strconv"
-//	"github.com/heroku/Assignment2/CurrencyTicker"
+	"github.com/heroku/Assignment2/CurrencyTicker"
 //	"encoding/json"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
