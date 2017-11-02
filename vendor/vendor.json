@@ -1,6 +1,19 @@
 {
 	"comment": "",
 	"ignore": "test",
-	"package": [],
+	"package": [
+		{
+			"path": "/home/siggy/go/src/github.com/heroku/Assignment2/CurrencyTicker",
+			"revision": ""
+		},
+		{
+			"path": "/home/siggy/go/src/github.com/heroku/Assignment2/CMD/WEB",
+			"revision": ""
+		},
+		{
+			"path": "/home/siggy/go/src/github.com/heroku/Assignment2/CMD/WebHooks",
+			"revision": ""
+		}
+	],
 	"rootPath": "github.com/heroku/Assignment2"
 }
