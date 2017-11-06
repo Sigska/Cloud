@@ -77,7 +77,7 @@ _, err = fmt.Scanln(&target)
 if err !=nil {
 	fmt.Println("error making TargetCurrency")
 
-
+}
 in := WebHook{bson.NewObjectId(),discordURL,base,target,min,max}
 
 err = session.DB(db.DatabaseName).C("webhooks").Insert(in)
@@ -86,8 +86,6 @@ err = session.DB(db.DatabaseName).C("webhooks").Insert(in)
 		fmt.Printf("error in Insert(): %v", err.Error())
 
 	}
-
-}
 
 }
 
