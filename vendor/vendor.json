@@ -3,6 +3,12 @@
 	"ignore": "test",
 	"package": [
 		{
+			"checksumSHA1": "dlatx/cOvoTuESdVcKFL9g3z4y4=",
+			"path": "github.com/heroku/Assignment2/CMD/WebHooks",
+			"revision": "7bfe372a472ea4e39c4003e948170a353a60a126",
+			"revisionTime": "2017-11-06T12:28:01Z"
+		},
+		{
 			"checksumSHA1": "1D8GzeoFGUs5FZOoyC2DpQg8c5Y=",
 			"path": "gopkg.in/mgo.v2",
 			"revision": "3f83fa5005286a7fe593b055f0d7771a7dce4655",
@@ -33,5 +39,5 @@
 			"revisionTime": "2016-08-18T02:01:20Z"
 		}
 	],
-	"rootPath": "github.com/heroku/Assignment2"
+	"rootPath": "/home/siggy/go/src/github.com/heroku/Assignment2"
 }
