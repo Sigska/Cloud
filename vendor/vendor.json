@@ -39,7 +39,6 @@
 	
 }
 "heroku" {
-	"goVersion": "go1.9.2",
 	"install": [
 		"./CMD/WebHooks",
 		"./CMD/WEB",
