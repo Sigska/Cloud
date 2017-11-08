@@ -1,2 +1,2 @@
-web: CMD/WEB/main
-clock: CMD/WebHooks/main
+web: CMD/WEB
+clock: CMD/WebHooks
