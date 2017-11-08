@@ -1,2 +1,0 @@
-web: WEB
-clock: WebHooks
