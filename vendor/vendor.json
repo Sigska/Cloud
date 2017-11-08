@@ -34,12 +34,16 @@
 			"revisionTime": "2016-08-18T02:01:20Z"
 		}
 	],
+
+	"rootPath": "github.com/heroku/Assignment2"
+	
+}
+"heroku" {
+	"goVersion": "go1.8",
 	"install": [
 		"./CMD/WebHooks",
 		"./CMD/WEB",
 		"./CurrencyTicker"
 
-	],
-	"rootPath": "github.com/heroku/Assignment2"
-	
+	]
 }
