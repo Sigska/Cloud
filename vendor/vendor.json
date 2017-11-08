@@ -33,7 +33,7 @@
 			"revisionTime": "2016-08-18T02:01:20Z"
 		}
 	],
-	"rootpath":"/github.com/heroku/Assignment2",
+	"rootPath":"/github.com/heroku/Assignment2",
 	"install": [
 		"./CMD/WebHooks",
 		"./CMD/WEB",
