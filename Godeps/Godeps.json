@@ -1,5 +1,5 @@
 {
-	"ImportPath": "/home/siggy/go/src/github.com/heroku/Assignment2",
+	"ImportPath": "github.com/heroku/Assignment2",
 	"GoVersion": "go1.8",
 	"GodepVersion": "v79",
 	"Packages": [
