@@ -1,7 +1,7 @@
-{
+"heroku":{
 	"comment": "",
 	"ignore": "test",
-	"package": [
+	"install": [
 		{
 			"checksumSHA1": "dlatx/cOvoTuESdVcKFL9g3z4y4=",
 			"path": "github.com/heroku/Assignment2/CMD/WebHooks",
