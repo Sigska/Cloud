@@ -3,16 +3,17 @@ package main
 
 
 import (
-	//"fmt"
+	"fmt"
 	"net/http"
 	//"strings"
 	"os"
+//	"encoding/json"
 	"github.com/heroku/Assignment2/CurrencyTicker"
-	"github.com/heroku/Assignment2/WebHooks"
+//	"github.com/heroku/Assignment2/CMD/WebHooks"
 	)
 
 
-
+/*
 
 func (db *CurrencyTickerDB) Get_WebHooks(w http.ResponseWriter, db    , id string) {
 	webhook, ok := db.Get(id)
@@ -23,20 +24,20 @@ func (db *CurrencyTickerDB) Get_WebHooks(w http.ResponseWriter, db    , id strin
 
 	json.NewEncoder(w).Encode(webhook)
 }
+*/
 
 
 
-
-
+/*
 
 
 
 func HandlerWebhook(w http.ResponseWriter, r *http.Request) {
-	switch r.method {
+	switch r.Method {
 	
 	case "POST":
-		var webhook WebHook{}
-		err := json.NewDecoder(r.Body).Decode(weebhook)
+	//	var webhook WebHook{}
+		err := json.NewDecoder(r.Body).Decode(webhook)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return 
@@ -45,16 +46,17 @@ func HandlerWebhook(w http.ResponseWriter, r *http.Request) {
 
 		return 
 
-	/case "GET":
+	case "GET":
 		http.Header.Add(w.Header(), "content-type", "application/json")
 
 		return
 
 
 
-
+		}
 	}
-}
+*/
+
 
 
 
@@ -66,20 +68,30 @@ func HandlerWebhook(w http.ResponseWriter, r *http.Request) {
 func main () {
 
 
- mongoDB.CurrencyData.Global_db = &mongoDB.CurrencyData.CurrencyTicker_db{
+	Global_db := &CurrencyTicker.CurrencyTickerDB{
 		"mongodb://localhost",
 		"currencyTicker_db",
 		"CurrencyData",
 	}
 
-
-//port := os.Getenv("PORT")
-
-port := "localhost:8080"
+	fmt.Println(Global_db.DatabaseURL)
 
 
-//http.ListenAndServe(":"+port, nil)
-http.ListenAndServe("localhost8080", nil)
+	port := os.Getenv("PORT")
+
+	//port := "localhost:8080"
+
+
+	err := http.ListenAndServe(":"+port, nil)
+	if err != nil {
+		panic(err)
+	}
+
+
+
+
+
+	//http.ListenAndServe("localhost8080", nil)
 
 
 }

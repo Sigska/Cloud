@@ -190,7 +190,7 @@ fixerURL := "http://api.fixer.io/latest"
 
 
 
-/*
+
 func (db *CurrencyTickerDB) Get_Latest()  CurrencyData{
 	
 
@@ -200,18 +200,21 @@ func (db *CurrencyTickerDB) Get_Latest()  CurrencyData{
 		panic(err)
 	}
 	defer session.Close()
-	allWasGood := true
+
 	dbSize := 3
-	err = session.DB(db.DatabaseName).C(db.CollectionName).Find().Skip(dbSize-1).One(db.CurrencyData)
+	var items CurrencyData
+	err = session.DB(db.DatabaseName).C(db.CollectionName).Find(nil).Skip(dbSize-1).One(items)
 	if err != nil {
-		allWasGood := false
+		panic(err)
 	}
 
-	return latestCurrencyData
+	return items
+
+
 
 }
 
-*/
+
 
 /*
 func (db *CurrencyTickerDB) Get_Average(base string, target string){
