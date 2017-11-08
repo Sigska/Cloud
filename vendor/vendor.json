@@ -1,20 +1,8 @@
-{	
+"heroku": {	
 	"goVersion": "go1.8",	
 	"comment": "",
 	"ignore": "test",
 	"package": [
-		{
-			"checksumSHA1": "dlatx/cOvoTuESdVcKFL9g3z4y4=",
-			"path": "github.com/heroku/Assignment2/CMD/WebHooks",
-			"revision": "dbe5ed7f9063f65fe0ec962875901c6c86453dd3",
-			"revisionTime": "2017-11-07T17:34:55Z"
-		},
-		{
-
-
-		"path":"github.com/heroku/Assignment2/CMD/WEB" 
-
-		},
 		{
 			"checksumSHA1": "1D8GzeoFGUs5FZOoyC2DpQg8c5Y=",
 			"path": "gopkg.in/mgo.v2",
@@ -46,5 +34,12 @@
 			"revisionTime": "2016-08-18T02:01:20Z"
 		}
 	],
+	"install": [
+		"./CMD/WebHooks",
+		"./CMD/WEB",
+		"./CurrencyTicker"
+
+	],
 	"rootPath": "github.com/heroku/Assignment2"
+	
 }
