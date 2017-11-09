@@ -65,8 +65,15 @@ type SubscriberHandler struct {
 	Monitor 	CurrencyMonitor
 }
 
-func HandleSubRequestPOST(handler *SubscriberHandler)(r http.ResponseWriter, w *http.Request) {
-	var s Subscriber
+//TODO funk to copy data into this struct or something fk? 
+
+
+
+
+
+
+func (handler *SubscriberHandler) HandleSubRequestPOST(r http.ResponseWriter, w *http.Request) {
+	
 	err:= json.NewDecoder(w.Body).Decode(&s)
 
 	if err != nil {
@@ -88,7 +95,7 @@ func HandleSubRequestPOST(handler *SubscriberHandler)(r http.ResponseWriter, w *
 
 
 
-	id, err2 := handler.db.Add(s)
+	id, err2 := handler.db.Add_New_Ticker()
 	if err2 != nil {
 		fmt.Println("error:   %v", http.StatusInternalServerError)
 	}
@@ -99,37 +106,114 @@ func HandleSubRequestPOST(handler *SubscriberHandler)(r http.ResponseWriter, w *
 }
 
 
-func HandleRequestPOST(handler *SubscriberHandler)(r http.ResponseWriter, w *http.Request) {
+func (handler *SubscriberHandler) HandleRequestGET(r http.ResponseWriter, w *http.Request) {
 
-parts := strings.Split(req.URL.String(), "/")
-if len(parts) < 2 {
-	fmt.Println("error:  %v", http.StatusBadRequest )
+	parts := strings.Split(req.URL.String(), "/")
+	if len(parts) < 2 {
+		fmt.Println("error:  %v", http.StatusBadRequest )
+		return
+	}
+
+
+
+	sub, err :=  handler.db.Get(parts[1]) 
+	if err != nil {
+		fmt.Println("error:  %v", http.StatusNotFound) 
+		return 
+	}
+
+
+
+
+	http.Header.Add(res.Header(), "content-type", "application/json")
+
+	err := json.Encoder(r,).Encode(sub)
+	if err != nil {
+		fmt.Println("error:  %v", http.StatusInternalServerError)
+		return
+	}
+
+
+}
+
+func (handler *SubscriberHandler) HandleRequestDELETE(r http.ResponseWriter, w *http.Request) {
+
+
+	parts := strings.Split(w.URL.String(), "/")
+	if len(parts) < 2 {
+		fmt.Println("error    %v", StatusBadRequest)
+		return
+	}
+	err := handler.Remove_Webhook_byId(parts[1])
+	if err != nil {
+		fmt.Println("error     %v", StatusNotFound )
+		return
+	}
+
+fmt.Fprint(r, http.StatusOK)
+
+}
+
+func (handler *SubscriberHandler) HandleLatest(r ResponseWriter, w *http.Request) {
+
+
+		var currReq UserData
+
+		err := json.NewDecoder(r.Body).Decode(&currReq)
+		if err!= nil {
+			fmt.Println("error:  	%v", StatusBadRequest)
+			return
+		}
+
+	//  TODO  add more checks
+	//
+
+	rate, err := handler.Get_Last_Webhook (*UserData.BaseCurrency, *UserData.TargetCurrency)
+
+	if err != nil {
+		Fprint("error  	%v", http.StatusInternalServerError)
+		return 
+	}
+
+
+Fprint(r, rate)
+
+}
+
+func (handler *SubscriberHandler) HandleAverage(r ResponseWriter, w *http.Request) {
+if w.Method != "POST" {
+	fmt.Println("error: only post is implemented")
 	return
 }
 
-
-
-sub, err :=  handler.db.Get(parts[1]) 
+var currReq CurrencyData
+err := json.NewDecoder(w.Body).Decode(%currReq)
 if err != nil {
-	fmt.Println("error:  %v", http.StatusNotFound) 
-	return 
+	fmt.Println("error:		%v", StatusBadRequest)
 }
 
 
 
+rate, err := handler.Get_Average()
 
-http.Header.Add(res.Header(), "content-type", "application/json")
-
-err := json.Encoder(r,).Encode(sub)
-if err != nil {
-	fmt.Println("error:  %v", http.StatusInternalServerError)
-	return
-}
 
 
 }
 
 
+	
+func (handler *SubscriberHandler) HandleSubscriberRequest(r http.ResponseWriter, w *http.Request) {
+
+	// switch on the method of the request
+switch w.Method {
+	case "POST": 
+			handler.HandleRequestPOST(r, w)
+	case "GET":
+			handler.HandleRequestGET(r, w) 
+	case "DELETE"
+			handler.HandleRequestDELETE(r, w)
+
+}
 
 
 func main () {

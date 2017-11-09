@@ -148,8 +148,8 @@ fixerURL := "http://api.fixer.io/latest"
 	resp, _ := http.Get(fixerURL)
 	bytes, _ := ioutil.ReadAll(resp.Body)
 
-	
 	defer resp.Body.Close()										// make sure we close body after
+
 	var info map[string]interface{}
 	err = json.Unmarshal(bytes, &info)
 	if err != nil{
@@ -168,7 +168,7 @@ fixerURL := "http://api.fixer.io/latest"
 		return err
 	}
 
-	return nil
+	return nil 
 
 
 /*	url := "http://api.fixer.io/latest?BASE=EUR"
@@ -254,8 +254,17 @@ defer session.Close()
 }
 
 
-
 */
+
+
+func (db *CurrencyTickerDB) Get_Average() CurrencyData {
+	
+}
+
+
+
+
+
 
 
 /*
