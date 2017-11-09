@@ -5,15 +5,28 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"net/url"
+//	"net/url"
 	"strings"
-	"os"
+//	"os"
 	"encoding/json"
-//	"github.com/heroku/Assignment2/CurrencyTicker"
-//	"github.com/heroku/Assignment2/CMD/WebHooks"
-	service "github.com/heroku/Assignment2/CurreencyTicker"
+	"github.com/heroku/Assignment2/CurrencyTicker"
+	"github.com/heroku/Assignment2/WebHookFunctions"
+//	service "github.com/heroku/Assignment2/CurrencyTicker"
 	)
 
+type SubscriberHandler struct {
+	db 			WebHookFunctions.WebHook
+	Monitor 	CurrencyTicker.CurrencyTickerDB
+}
+
+//TODO funk to copy data into this struct or something fk? 
+
+
+func SubscriberHandlerFactory(db WebHookFunctions.WebHook, monitor CurrencyTicker.CurrencyTickerDB) SubscriberHandler {
+	handler := SubscriberHandler{db: db, Monitor: monitor}
+
+	return handler
+}
 
 /*
 
@@ -60,31 +73,22 @@ func HandlerWebhook(w http.ResponseWriter, r *http.Request) {
 */
 
 
-type SubscriberHandler struct {
-	db 			subscriberDB
-	Monitor 	CurrencyMonitor
-}
-
-//TODO funk to copy data into this struct or something fk? 
-
-
-
 
 
 
 func (handler *SubscriberHandler) HandleSubRequestPOST(r http.ResponseWriter, w *http.Request) {
 	
-	err:= json.NewDecoder(w.Body).Decode(&s)
+	err:= json.NewDecoder(w.Body).Decode(&handler)
 
 	if err != nil {
 		fmt.Println("error:  %v", http.StatusBadRequest)
 		return
 	}
-
+/*
 	if (!ValidateSub(s)) {
 		fmt.Println("error: %v", http.StatusBadRequest)
 		return
-	}
+	}*/
 	/*
 	// check validity of URL in posted json
 	_, err = url.ParseRequestURI(*s.WebhookURL)
@@ -93,108 +97,111 @@ func (handler *SubscriberHandler) HandleSubRequestPOST(r http.ResponseWriter, w 
 		return
 }	*/
 
+	
 
-
-	id, err2 := handler.db.Add_New_Ticker()
-	if err2 != nil {
+	err = handler.Monitor.AddNewTicker()
+	
+	if err != nil {
 		fmt.Println("error:   %v", http.StatusInternalServerError)
 	}
 
 	// if all works prints to resposnewriter
-	fmt.Fprint(r, id)
+//	fmt.Fprint(r, id)
 
 }
 
 
-func (handler *SubscriberHandler) HandleRequestGET(r http.ResponseWriter, w *http.Request) {
+func (handler *SubscriberHandler) HandleRequestGET(w http.ResponseWriter, r *http.Request) {
 
-	parts := strings.Split(req.URL.String(), "/")
+
+	parts := strings.Split(r.URL.String(), "/")
 	if len(parts) < 2 {
 		fmt.Println("error:  %v", http.StatusBadRequest )
 		return
 	}
 
 
-
+/*
 	sub, err :=  handler.db.Get(parts[1]) 
 	if err != nil {
 		fmt.Println("error:  %v", http.StatusNotFound) 
 		return 
 	}
+*/
 
 
+/*
+	http.Header.Add(w.Header(), "content-type", "application/json")
 
-
-	http.Header.Add(res.Header(), "content-type", "application/json")
-
-	err := json.Encoder(r,).Encode(sub)
+	err := json.Encoder(w).Encode(sub)
 	if err != nil {
 		fmt.Println("error:  %v", http.StatusInternalServerError)
 		return
 	}
 
-
+*/
 }
 
-func (handler *SubscriberHandler) HandleRequestDELETE(r http.ResponseWriter, w *http.Request) {
+func (handler *SubscriberHandler) HandleRequestDELETE(w http.ResponseWriter, r *http.Request) {
 
 
-	parts := strings.Split(w.URL.String(), "/")
+	parts := strings.Split(r.URL.String(), "/")
 	if len(parts) < 2 {
-		fmt.Println("error    %v", StatusBadRequest)
+		fmt.Println("error    %v", http.StatusBadRequest)
 		return
 	}
-	err := handler.Remove_Webhook_byId(parts[1])
+	WebHookFunctions.Remove_Webhook_byId(&handler.Monitor,parts[1])
+	/*
 	if err != nil {
-		fmt.Println("error     %v", StatusNotFound )
+		fmt.Println("error     %v", http.StatusNotFound )
 		return
 	}
-
-fmt.Fprint(r, http.StatusOK)
+*/
+fmt.Fprint(w, http.StatusOK)
 
 }
 
-func (handler *SubscriberHandler) HandleLatest(r ResponseWriter, w *http.Request) {
+func (handler *SubscriberHandler) HandleLatest(w http.ResponseWriter, r *http.Request) {
 
 
-		var currReq UserData
+		var currReq WebHookFunctions.WebHook
 
 		err := json.NewDecoder(r.Body).Decode(&currReq)
 		if err!= nil {
-			fmt.Println("error:  	%v", StatusBadRequest)
+			fmt.Println("error:  	%v", http.StatusBadRequest)
 			return
 		}
 
 	//  TODO  add more checks
 	//
 
-	rate, err := handler.Get_Last_Webhook (*UserData.BaseCurrency, *UserData.TargetCurrency)
+	WebHookFunctions.Get_Last_Webhook (&handler.Monitor)
 
 	if err != nil {
-		Fprint("error  	%v", http.StatusInternalServerError)
+		fmt.Println("error  	%v", http.StatusInternalServerError)
 		return 
 	}
 
 
-Fprint(r, rate)
+//fmt.Println(r, rate)
 
 }
 
-func (handler *SubscriberHandler) HandleAverage(r ResponseWriter, w *http.Request) {
+func (handler *SubscriberHandler) HandleAverage(r http.ResponseWriter, w *http.Request) {
 if w.Method != "POST" {
 	fmt.Println("error: only post is implemented")
 	return
 }
 
-var currReq CurrencyData
-err := json.NewDecoder(w.Body).Decode(%currReq)
+var currReq CurrencyTicker.CurrencyTickerDB
+err := json.NewDecoder(w.Body).Decode(&currReq)
 if err != nil {
-	fmt.Println("error:		%v", StatusBadRequest)
+	fmt.Println("error:		%v", http.StatusBadRequest)
 }
 
 
 
-rate, err := handler.Get_Average()
+//rate, err := handler.Get_Average()
 
 
 
@@ -205,13 +212,15 @@ rate, err := handler.Get_Average()
 func (handler *SubscriberHandler) HandleSubscriberRequest(r http.ResponseWriter, w *http.Request) {
 
 	// switch on the method of the request
+	
 switch w.Method {
 	case "POST": 
-			handler.HandleRequestPOST(r, w)
+			handler.HandleSubRequestPOST(r, w)
 	case "GET":
 			handler.HandleRequestGET(r, w) 
-	case "DELETE"
+	case "DELETE":
 			handler.HandleRequestDELETE(r, w)
+	}
 
 }
 
@@ -228,26 +237,26 @@ func main () {
 	fmt.Println(Global_db.DatabaseURL)
 */
 
-	port := os.Getenv("PORT")
-	fixerIO_url :=service.GetENV("FIXER_IO_URL")
-	mongodb_url := service.GetENV("MONGO_DB_URL")
-	mongoDBDatabaseName := service.GetENV("MONGO_DB_DATABASE_NAME")
+//	port := os.Getenv("PORT")
+//	fixerIO_url := os.Getenv("FIXER_IO_URL")
+//	mongodb_url := os.Getenv("MONGO_DB_URL")
+//	mongoDBDatabaseName := os.Getenv("MONGO_DB_DATABASE_NAME")
 
-	db, err := service.SubscriberMongo
+//	db, err := service.SubscriberMongo
 
-	//port := "localhost:8080"
+	port := "localhost:8080"
 
 
 
 
 	// set up handlers
-	http.HandleFunc("/", HandleSubRequest)
-	http.Handlefunc("/latest", HandleLatest)
-	http.HandleFunc("/average", HandleAverage)
-	http.HandleFunc("/triggerall", HandleTriggerAll)
+//	http.HandleFunc("/", HandleSubRequest)
+//	http.Handlefunc("/latest", HandleLatest)
+//	http.HandleFunc("/average", HandleAverage)
+//	http.HandleFunc("/triggerall", HandleTriggerAll)
 
 
-	err := http.ListenAndServe(":"+port, nil)
+	err := http.ListenAndServe(port, nil)
 	if err != nil {
 		panic(err)
 	}

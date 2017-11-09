@@ -134,7 +134,7 @@ defer session.Close()
 */
 
 
-func (db *CurrencyTickerDB) Add_NewTicker() error {
+func (db *CurrencyTickerDB) AddNewTicker() error {
 
 session, err := mgo.Dial(db.DatabaseURL)
 if err != nil {
@@ -167,9 +167,9 @@ fixerURL := "http://api.fixer.io/latest"
 		fmt.Printf("error in Insert(): %v", err.Error())
 		return err
 	}
-
-	return nil 
-
+	
+	
+return nil
 
 /*	url := "http://api.fixer.io/latest?BASE=EUR"
 
@@ -256,11 +256,11 @@ defer session.Close()
 
 */
 
-
+/*
 func (db *CurrencyTickerDB) Get_Average() CurrencyData {
-	
-}
 
+}
+*/
 
 
 
