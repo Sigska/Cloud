@@ -215,22 +215,31 @@ func (db *CurrencyTickerDB) Get_Latest()  CurrencyData{
 }
 
 
-
 /*
+
 func (db *CurrencyTickerDB) Get_Average(base string, target string){
 session, err := mgo.Dial(db.DatabaseURL)
 if err != nil {
 		fmt.Println("Error in stuff:", err.Error())
 }
 defer session.Close()
-	count, err := session.DB(db.DatabaseName).C(db.CollectionName).Count()
+/*	count, err := session.DB(db.DatabaseName).C(db.CollectionName).Count()
 	if err != nil	{
 		fmt.Println("Error counting stuff:", err.Error())
 	}
+	
+	result := []CurrencyData	
+	var avg float32
+	avg = 0
+	for i := range result {
+		item := result[i]
+	//	avg += item.From(latest.BaseCurrency).To(latest.TargetCurrency).Rate
+	}
+)
 
-
-	result := make(map[string]interface{})
-	err = session.DB(db.DatabaseName).C(db.CollectionName).Find(nil).Skip(count-3).All(&result)
+fmt.println(result[i].rates.NOK)
+fmt.Fprint(w, avg/7)
+}
 	/*if err != nil {
 		fmt.Println("Error setting up data stuff:", err.Error())
 	}
@@ -242,19 +251,15 @@ defer session.Close()
 	x := data[0]
 	y := data[1]
 	z := data[2]
-
 	fmt.Println("data %i", data[0])
 /*
 	avg := x + y + z
 	avg = avg / 3
 	fmt.println("average of last 3 days: %i", avg)
-
-
-
 }
 
 
-*/
+
 
 /*
 func (db *CurrencyTickerDB) Get_Average() CurrencyData {

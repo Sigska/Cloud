@@ -170,3 +170,34 @@ fmt.Println("size of webhook: %i", count)
 }
 
 
+/*
+
+func Get_Average(db *CurrencyTicker.CurrencyTickerDB) {
+
+	session, err := mgo.Dial(db.DatabaseURL)
+	if err != nil {
+		fmt.Println("error creating session:",err.Error())
+	}
+	defer session.Close()
+
+	var latestData []webhook
+	err = database.C("currency").Find(nil).Limit(7).Sort("-_id").All(&latestData)
+	if err != nil {
+		fmt.Println("Error: 	", err.Error())
+		return
+	}
+
+	var average float
+	avg = 0;
+
+	for i := range latestData {
+		item := latestData[i]
+		average += item.From(latestData.Base).To(latestData.Target).Rate
+	}
+	average := (average/3)
+
+fmt.Fprint(w, average)
+
+}
+
+*/

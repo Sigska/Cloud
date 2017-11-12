@@ -71,6 +71,7 @@ err = session.DB(db.DatabaseName).C("webhooks").Insert(in)
 	}
 */
 db.AddNewTicker()
+//db.Get_Average("EURO", "NOK")
 WebHookFunctions.Insert_Webhook(&db)
 WebHookFunctions.Invoke_Webhooks(&db)
 WebHookFunctions.Get_Last_Webhook(&db)
