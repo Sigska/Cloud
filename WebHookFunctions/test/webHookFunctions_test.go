@@ -7,12 +7,15 @@ import (
 	//"net/http/httptest"
 	//"time"
 	//"log"
-
+	"fmt"
 	//"strings"
 	"net/http"
 //	"net/http/httptest"
 //	"encoding/json"
 //	"bytes"
+	"gopkg.in/mgo.v2"
+//	"gopkg.in/mgo.v2/bson"
+	"github.com/heroku/Assignment2/WebHookFunctions"
 )
 
 var testData = WebHook( "URL_test", "EURO", "NOK", 2.4, 8.6)
@@ -44,7 +47,7 @@ func Test_WebhookFunctions_remove(t *testing.T) {
 func test_WebHookFunctions_Invoke_Webhooks(t* testing.T) {
 
 testDatas := make([]WebHook, 0, 10)
-session, err := mgo.Dial(db.DatabaseURL)
+session, err := mgo.Dial(testDataDB.DatabaseURL)
 if err != nil {
 	t.Error("error dialing")
 }

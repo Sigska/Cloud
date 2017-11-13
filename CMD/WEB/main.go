@@ -187,6 +187,8 @@ func (handler *SubscriberHandler) HandleLatest(w http.ResponseWriter, r *http.Re
 
 }
 
+
+/*
 func (handler *SubscriberHandler) HandleAverage(w http.ResponseWriter, r *http.Request) {
 if w.Method != "POST" {
 	fmt.Println("error: only post is implemented")
@@ -211,7 +213,7 @@ rate, err := WebHookFunctions.Get_Average(handler.WebHook.webhook.Base, handler.
 fmt.Println(w, rate)
 
 }
-
+*/
 
 	
 func (handler *SubscriberHandler) HandleSubscriberRequest(r http.ResponseWriter, w *http.Request) {
