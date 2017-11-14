@@ -19,7 +19,7 @@ package WebHookFunctions
 
 
 type WebHook struct {
-	ID bson.ObjectId `json:"_id" bson:"_id"`
+	ID string `json:"_id" bson:"_id"`
 	WebhookURL string `json:"url"`
 	Base string `json:"base"`
 	Target string `json:"target"`
@@ -113,7 +113,7 @@ if err != nil {
 	for i := 0; i < dbSize; i++ {
 		_, err := http.PostForm(datas[i].WebhookURL, url.Values{"content": {"Webhook ID: " + datas[i].ID.Hex() + "		BaseCurrency  " + datas[i].Base + "    TargetCurrency  " + datas[i].Target + "   minTriggerValue	" + FloatToString(datas[i].Min) + "    maxTriggerValue		" + FloatToString(datas[i].Max) } , "username": {"IAMBOT"}})
 		if err != nil {
-			fmt.Println("Error when posting all webhooks at %i", i, err.Error())
+			fmt.Println("Error when posting all webhooinks at %i", i, err.Error())
 		}
 	}
 }
@@ -201,3 +201,6 @@ fmt.Fprint(w, average)
 }
 
 */
+
+
+

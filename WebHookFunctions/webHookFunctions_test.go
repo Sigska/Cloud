@@ -3,8 +3,6 @@ package WebHookFunctions
 
 import (
 	"testing"
-	//"net/http"
-	//"net/http/httptest"
 	//"time"
 	//"log"
 	"fmt"
@@ -15,11 +13,14 @@ import (
 //	"bytes"
 	"gopkg.in/mgo.v2"
 //	"gopkg.in/mgo.v2/bson"
-	"github.com/heroku/Assignment2/WebHookFunctions"
+//	"github.com/heroku/Assignment2/WebHookFunctions"
 )
 
-var testData = WebHook( "URL_test", "EURO", "NOK", 2.4, 8.6)
-var testDataDB = webHookDB("user: sdsds", "cloudtest", "webooks")
+//
+//db := CurrencyTicker.CurrencyTickerDB{"mongodb://Siggy:Siggy@ds145275.mlab.com:45275/currency_db", "currency_db", "currency"}
+
+var testData = WebHook( "test", "URL_test", "EURO", "NOK", 2.4, 8.6)
+var testDataDB = CurrencyTicker_db.CurrencyTickerDB("user: sdsds", "cloudtest", "webooks")
 
 type Test struct {
 	Base string `json:"base"`
@@ -46,14 +47,14 @@ func Test_WebhookFunctions_remove(t *testing.T) {
 
 func test_WebHookFunctions_Invoke_Webhooks(t* testing.T) {
 
-testDatas := make([]WebHook, 0, 10)
+testDatas := make([](WebHookFunctions.WebHook), 0, 10)
 session, err := mgo.Dial(testDataDB.DatabaseURL)
 if err != nil {
 	t.Error("error dialing")
 }
-	defer session.Close()
+defer session.Close()
 
-dbSize, err := session.DB(db.DatabaseName).C("webhooks").Count()
+dbSize, err := session.DB(testDataDB.DatabaseName).C("webhooks").Count()
 if err != nil {
      t.Error("error counting")
 }
