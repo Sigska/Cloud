@@ -19,7 +19,7 @@ package WebHookFunctions
 
 
 type WebHook struct {
-	ID string `json:"_id" bson:"_id"`
+	ID bson.ObjectId `json:"_id" bson:"_id"`
 	WebhookURL string `json:"url"`
 	Base string `json:"base"`
 	Target string `json:"target"`
@@ -37,7 +37,7 @@ func FloatToString(input_num float64) string {
 
 
 
-func Insert_Webhook(db *CurrencyTicker.CurrencyTickerDB){
+func Insert_Webhook(db *CurrencyTicker.CurrencyTickerDB) error{
 
 discordURL := "https://discordapp.com/api/webhooks/374908902032146432/lHx9nUAyDy1jmoahR8WrWnWl_y0B1WYc61LRuMPrcS9H5g9CcoVV3KVq7DzpfASIPPzP"
 
@@ -87,6 +87,7 @@ err = session.DB(db.DatabaseName).C("webhooks").Insert(in)
 
 	}
 
+return nil
 }
 
 
@@ -154,7 +155,7 @@ if err != nil {
 
 
 // remove from database
-func Remove_Webhook_byId(db *CurrencyTicker.CurrencyTickerDB, id string) {
+func Remove_Webhook_byId(db *CurrencyTicker.CurrencyTickerDB, id string) error {
 
 session, err := mgo.Dial(db.DatabaseURL)
 if err != nil {
@@ -167,6 +168,8 @@ var myData WebHook
 err = session.DB(db.DatabaseName).C("webhooks").Remove(bson.M{"_id":myData.ID})
 count, _ := session.DB(db.DatabaseName).C("webhooks").Count()
 fmt.Println("size of webhook: %i", count)
+
+return nil
 }
 
 
