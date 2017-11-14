@@ -44,7 +44,7 @@ func TestWebhookFunctions_add(t* testing.T) {
 
 func Test_WebhookFunctions_remove(t *testing.T) {
 	Id := string(testData.ID)
-	err := WebHookFunctions.Remove_Webhook_byId(*testDataDB, Id)
+	err := WebHookFunctions.Remove_Webhook_byId(&testDataDB, Id)
 	if err !=  nil {
 		t.Error("Deleting failed")
 	}
